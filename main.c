@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include <stdlib.h> 
+#include <time.h>
 
 int NumeroDeVectores = 100;
 int Quantum=10;
@@ -14,7 +15,7 @@ struct Vector{
 
 int main(){
 
-    
+srand(time(NULL)); // inicializa la semilla
 GenerarVectores();
 SumaVectores();
 //while ()
@@ -32,14 +33,14 @@ int GenerarVectores(){
 
     	
 
-    	Vector1[NumeroDeVectores].Magnitud=(rand())+1;
-    	Vector1[NumeroDeVectores].Angulo=(rand())+1;
-    	Vector2[NumeroDeVectores].Magnitud=(rand())+1;
-    	Vector2[NumeroDeVectores].Angulo=(rand())+1;
-		printf("Vector 1 %d Magnitud: %f\n",i,Vector1[NumeroDeVectores].Magnitud);
-    	printf("Vector 1 %d Angulo: %d\n",i,Vector1[NumeroDeVectores].Angulo);
-    	printf("Vector 2 %d Magnitud: %f\n",i,Vector2[NumeroDeVectores].Magnitud);
-    	printf("Vector 2 %d Angulo: %d\n",i,Vector2[NumeroDeVectores].Angulo);
+    	Vector1[i].Magnitud=(rand()%200)+1;
+    	Vector1[i].Angulo=(rand()%100)+1;    
+    	Vector2[i].Magnitud=(rand()%200)+1;   	
+    	Vector2[i].Angulo=(rand()%100)+1;
+		printf("Vector 1 %d Magnitud: %f\n",i,Vector1[i].Magnitud);
+    	printf("Vector 1 %d Angulo: %f\n",i,Vector1[i].Angulo);
+    	printf("Vector 2 %d Magnitud: %f\n",i,Vector2[i].Magnitud);
+    	printf("Vector 2 %d Angulo: %f\n",i,Vector2[i].Angulo);
     }
 
 }
@@ -50,17 +51,20 @@ int GenerarVectores(){
 //}
 
 
-//int RestaVectores(){
+int RestaVectores(){
+	Resta[1].Magnitud=Vector1[1].Magnitud-Vector2[1].Magnitud;
+	Resta[1].Angulo=Vector1[1].Angulo-Vector2[1].Angulo;
+    printf("Vector Resta Magnitud: %f\n",Resta[1].Magnitud);
+    printf("Vector Resta Angulo: %f \n",Resta[1].Angulo);
 
-
-//}
+}
 
 int SumaVectores(){
 	
 	Suma[1].Magnitud=Vector1[1].Magnitud+Vector2[1].Magnitud;
 	Suma[1].Angulo=Vector1[1].Angulo+Vector2[1].Angulo;
     printf("Vector Suma Magnitud: %f\n",Suma[1].Magnitud);
-    printf("Vector Suma Angulo: %d\n",i,Suma[1].Angulo);
+    printf("Vector Suma Angulo: %f \n",Suma[1].Angulo);
 
 }
 
