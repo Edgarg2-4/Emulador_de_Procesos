@@ -2,8 +2,13 @@
     "tasks": [
         {
             "type": "cppbuild",
+<<<<<<< HEAD
             "label": "C/C++: gcc.exe build active file",
             "command": "C:/Strawberry/c/bin/gcc.exe",
+=======
+            "label": "C/C++: main.c build active file",
+            "command": "c:\\UNAM Ingeniería Mecatrónica\\11° semestre UNAM\\Sistemas Operativos en Tiempo Real\\Proyecto 1\\main.c",
+>>>>>>> 16a3d630251cf8d6825646bb10aa9e2c0033cca2
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
@@ -13,7 +18,11 @@
                 ""
             ],
             "options": {
+<<<<<<< HEAD
                 "cwd": "C:/Strawberry/c/bin"
+=======
+                "cwd": "c:\\UNAM Ingeniería Mecatrónica\\11° semestre UNAM\\Sistemas Operativos en Tiempo Real\\Proyecto 1"
+>>>>>>> 16a3d630251cf8d6825646bb10aa9e2c0033cca2
             },
             "problemMatcher": [
                 "$gcc"
