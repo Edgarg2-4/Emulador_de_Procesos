@@ -5,13 +5,17 @@
 #include <stdbool.h>
 #include <math.h> 
 #include <unistd.h>
+#include <math.h>   // Libreria para sqrt() y pow()
+#include <unistd.h> // Libreria usada para sleep(2) 
 
-int NumeroDeVectores = 100;
-int Quantum = 10;
+// Variables globales
+int NumeroDeVectores = 100;  // cantidad de elementos por vector
+int Quantum = 10;           // numero de elementos que procesa cada proceso en un turno
 int j = 0;
 int i = 0;
 int k = 0;
 int p = 0;
+int p = 0;              // Nueva variable: usada en Resultados() para recorrer índices impresos
 int NumeroDeVueltas = 0;
 int Escalar = 4;
 
@@ -22,7 +26,9 @@ int R_Escalar1[100], R_Escalar2[100];
 int R_ProductoPunto = 0;
 int Prioridades[5];
 
+int Prioridades[5];     // arreglo de prioridades
 
+// Función que genera los vectores de entrada V1 y V2 con números aleatorios
 void GenerarVectores(){
 	int i;
 	for(i = 0 ; i < NumeroDeVectores ; i++){
@@ -49,6 +55,19 @@ void GenerarVectores(){
 		}
 	}
 
+    printf("\n--- Vectores generados aleatoriamente ---\n");
+
+    // Imprimir valores de V1
+    printf("Valores de V1:\n");
+    for(i = 0 ; i < NumeroDeVectores ; i++){
+        printf("V1[%d] = %d\n", i, V1[i]);
+    }
+
+    // Imprimir valores de V2
+    printf("\nValores de V2:\n");
+    for(i = 0 ; i < NumeroDeVectores ; i++){
+        printf("V2[%d] = %d\n", i, V2[i]);
+    }
 }
 
 void Resultados(){
@@ -121,20 +140,22 @@ void llenarPrioridades(){
 	bool flag;
 	while(k < 5){
 		flag = true;
-		pri = rand() % 5;
+		pri = rand() % 5;           //generamos valor aleatorio entre 0 y 4
+		// verificamos que la prioridad asignada no se repita
 		for( l = 0 ; l < k ; l++){
-			if(Prioridades[l] == pri){
+			if(Prioridades[l] == pri){ // si la prioridad es la misma que otra, genera un valor entero nuevo
 				flag = false;
 				break;
 			}
 		}
-		if(flag){
+		if(flag){       //cuando el de prioridad es diferente de uno ya asignado se guarda 
 			Prioridades[k] = pri;
 			k++;
 		}
 	}
 }
 
+// ---------------------------- Procesos --------------------------------------------------
 void SumaVectores(int i){
 	R_Suma[i] = V1[i] + V2[i];
     
@@ -142,7 +163,6 @@ void SumaVectores(int i){
 
 void RestaVectores(int i){
 	R_Resta[i] = V1[i] - V2[i];
-
 }
 
 void MagnitudVectores(int i){
@@ -159,6 +179,15 @@ void EscalarVectores(int i){
 	R_Escalar2[i] = Escalar * V2[i];
 }
 
+void ProductoVectores(int i){
+	R_ProductoPunto += (V1[i]*V2[i]);
+}
+
+void EscalarVectores(int i){
+	R_Escalar1[i]=Escalar*V1[i];
+	R_Escalar2[i]=Escalar*V2[i];
+}
+// -------------------------- MAIN -----------------------------------------
 int main(void){
 	srand((unsigned)time(NULL)); // inicializa la semilla
 	GenerarVectores();
@@ -182,10 +211,4 @@ int main(void){
 	}
 	return 0;
 }
-
-
-
-
-
-
 
