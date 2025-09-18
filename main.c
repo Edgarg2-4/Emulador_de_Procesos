@@ -9,8 +9,8 @@ int NumeroDeTick=0;
 int i=0;
 int NumeroDeVueltas=0;
 struct Vector{
-    float Magnitud;
-    float Angulo;
+    float x;
+    float y;
 	//No se donde tengamos que utilizar malloc
 	//No estoy seguro de como utilizar los apuntadores
 	//Tal Vez con un Apuntador a un arreglo
@@ -23,7 +23,7 @@ int main(){
 srand(time(NULL)); // inicializa la semilla
 GenerarVectores();
 SumaVectores();
-RestaVectores();*/
+RestaVectores();
 printf("Se acabo Planificador");
 //while ()
 //{
