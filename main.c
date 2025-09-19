@@ -9,12 +9,12 @@
 // Variables globales
 int NumeroDeVectores = 100;  // cantidad de elementos por vector
 int Quantum = 10;           // numero de elementos que procesa cada proceso en un turno
-int j = 0;
-int i = 0;
-int k = 0;
-int p = 0;              // Nueva variable: usada en Resultados() para recorrer índices impresos
+int j = 0;                    // Variable para recorrer los 5 procesos
+int i = 0;                    // Variable para recorrer el numero de dato del vector
+int k = 0;                    // Variable para recorrer los 10 ticks
+int p = 0;                   // Variable para recorrer índices impresos
 int NumeroDeVueltas = 0;
-int Escalar = 4;        //  Nueva variable: define el valor con el que se multiplican vectores
+int Escalar = 4;        //Variable para el escalador
 
 // Vectores de entrada
 int V1[100],V2[100];
@@ -22,10 +22,9 @@ int V1[100],V2[100];
 // Vectores de resultados
 int R_Suma[100];        // resultado de la suma 
 int R_Resta[100];       // resultado de la resta
-//float R_Modulo[100];    // -------------------> este no se usa ya. no?
 float R_Magnitud[100];  // resultado de magnitud entre vectores
 int R_Escalar1[100],R_Escalar2[100]; //Resutados de multiplicacion de V1 y V2 por un escalar
-int R_Producto=0;       // resultado de producto punto entre vectores
+int R_ProductoPunto=0;  // codigo nuevo: antes estaba como R_Producto, ahora es R_ProductoPunto
 
 int Prioridades[5];     // arreglo de prioridades
 
@@ -36,83 +35,94 @@ void GenerarVectores(){
     for(i = 0 ; i < NumeroDeVectores ; i++){
         V1[i] = (rand() % 100) + 1;   
         V2[i] = (rand() % 100) + 1;  
-        //printf("%d. Vector 1  = %d\n",i,V1[i]);
-    	//printf("%d. Vector 2  = %d\n",i,V2[i]);
     }
 
-    printf("\n--- Vectores generados aleatoriamente ---\n");
-
-    // Imprimir valores de V1
-    printf("Valores de V1:\n");
+    //Impresión de Vector 1
+    printf("----- Vector 1 -----\n[");
     for(i = 0 ; i < NumeroDeVectores ; i++){
-        printf("V1[%d] = %d\n", i, V1[i]);
-    }
-
-    // Imprimir valores de V2
-    printf("\nValores de V2:\n");
+    	if(i == NumeroDeVectores - 1){
+    		printf("%d]\n\n", V1[i]);
+		}
+		else{
+			printf("%d, ", V1[i]);
+		}
+	}
+    //Impresión de Vector 2
+	printf("----- Vector 2 -----\n[");
     for(i = 0 ; i < NumeroDeVectores ; i++){
-        printf("V2[%d] = %d\n", i, V2[i]);
-    }
+    	if(i == NumeroDeVectores - 1){
+    		printf("%d]\n\n", V2[i]);
+		}
+		else{
+			printf("%d, ", V2[i]);
+		}
+	}
 }
 
 //Funcion que imprime resultados parciales de cada proceso
 void Resultados(){
-	while(p!=k){
-	// esto no jala del todo pero ya tengo mucho sueño y ya mañana lo checo con calmita, pero creo que en ese formato se entienden bien los resultados
-	printf("Suma:\n");
-    while(p != k){
-        printf("%d ", R_Suma[p]);
-        p++;
-    }
-    printf("\n");
-    
-	printf("Resta:\n");
-    while(p != k){
-        printf("%d ", R_Resta[p]);
-        p++;
-    }
-    printf("\n");    
+
+	printf("------PROCESO %d con prioridades [%d, %d, %d, %d, %d]------\n", i/10, Prioridades[0],Prioridades[1],Prioridades[2],Prioridades[3],Prioridades[4]);
 	
-    printf("Magnitud:\n");
-    while(p != k){
-        printf("%f ", R_Magnitud[p]);
-        p++;
-    }
-    printf("\n");   
-    
-    printf("Producto Escalar:\n");
-        printf("%d ", R_Producto);
-    printf("\n"); 
-    
-    printf("V1 por un escalar:\n");
-    while(p != k){
-        printf("%d ", R_Escalar1[p]);
-        p++;
-    }
-    printf("\n"); 
-    printf("V2 por un escalar:\n");
-    while(p != k){
-        printf("%d ", R_Escalar2[p]);
-        p++;
-    }
-    printf("\n"); 
-	/*printf("Suma = %d\n",R_Suma[p]);  // -------------> cambiamos i por p
-	printf("Resta = %d\n",R_Resta[p]);
-	printf("Magnitud = %f\n",R_Magnitud[p]);
-	printf("Producto Escalar = %d\n",R_Producto);
-	printf("Vector1 por Escalar = %d\n",R_Escalar1[p]);
-	printf("Vector2 Por Escalar = %d\n",R_Escalar2[p]);*/
-	p++;
-}
-p=k;
-if(k==100){
-	p=0;
-}
-	//sleep(2); //pausa de dos segundos entre impresion de resultados ---------> lo movimos a main
+	printf("Suma:\n[");
+	for(p = i - Quantum; p < i ; p++){
+    	if(p == i - 1){
+    		printf("%d]\n\n", R_Suma[p]);
+		}
+		else{
+			printf("%d, ", R_Suma[p]);
+		}
+	}
+	
+	printf("Resta:\n[");
+	for(p = i - Quantum; p < i ; p++){
+    	if(p == i - 1){
+    		printf("%d]\n\n", R_Resta[p]);
+		}
+		else{
+			printf("%d, ", R_Resta[p]);
+		}
+	}
+	
+	printf("Magnitud:\n[");
+	for(p = i - Quantum; p < i ; p++){
+    	if(p == i - 1){
+    		printf("%.2f]\n\n", R_Magnitud[p]);
+		}
+		else{
+			printf("%.2f, ", R_Magnitud[p]);
+		}
+	}
+	
+	printf("Producto Escalar:\n[ %d ",R_ProductoPunto); 
+	printf("]\n\n");
+	
+	printf("Vector 1 por Escalar:\n[");
+	for(p = i - Quantum; p < i ; p++){
+    	if(p == i - 1){
+    		printf("%d]\n\n", R_Escalar1[p]);
+		}
+		else{
+			printf("%d, ", R_Escalar1[p]);
+		}
+	}
+	printf("Vector 2 Por Escalar:\n[",R_Escalar2[p]);
+	for(p = i - Quantum; p < i ; p++){
+    	if(p == i - 1){
+    		printf("%d]\n\n\n\n", R_Escalar2[p]);
+		}
+		else{
+			printf("%d, ", R_Escalar2[p]);
+		}
+	}
+		 
+	if(i == 100){
+		printf("---------------------FIN DE PROCESO---------------------\n\n\n");
+	}
 }
 
 // funcion que asigna orden de prioridades aleatorios
-void llenarPrioridades(){
+void LlenarPrioridades(){
 	int pri;
 	int k = 0;
 	int l = 0;
@@ -132,9 +142,6 @@ void llenarPrioridades(){
 			k++;
 		}
 	}
-	// imprimimos arreglo de prioridades generado
-	printf("\n--- Arreglo de prioridades generado: ---\n");
-	printf("[%d, %d, %d, %d, %d] \n", Prioridades[0],Prioridades[1],Prioridades[2],Prioridades[3],Prioridades[4]);
 }
 
 // ---------------------------- Procesos --------------------------------------------------
@@ -151,13 +158,14 @@ void MagnitudVectores(int i){
 }
 
 void ProductoVectores(int i){
-	R_Producto += (V1[i]*V2[i]);
+	R_ProductoPunto += (V1[i]*V2[i]); // codigo nuevo: acumulador usa R_ProductoPunto
 }
 
 void EscalarVectores(int i){
 	R_Escalar1[i]=Escalar*V1[i];
 	R_Escalar2[i]=Escalar*V2[i];
 }
+
 // -------------------------- MAIN -----------------------------------------
 int main(void){
 	srand((unsigned)time(NULL)); // inicializa la semilla de aleatorios
@@ -168,14 +176,14 @@ int main(void){
 
 	i = 0;
 	while(1){  // iniciamos bucle infinito
-		llenarPrioridades(); // asignamos orden de prioridad aleatorio a cada proceso
+		LlenarPrioridades(); // asignamos orden de prioridad aleatorio a cada proceso
 		for(j = 0 ; j < 5 ; j++){ // recorremos los 5 procesos en el orden de prioridad asignado
 			for(k = 0 ; k < Quantum ; k++){ // ejecutamos cada proceso durante 10 quantums
 				ops[Prioridades[j]](k + i);
 			}
 		}
-		i += k; // -----------------------------> ajuste: actualiza valor de i
-		sleep(3); // ---------------------------> sleep aqui en vez de en resultados
+		i += k; //actualiza valor de i
+		sleep(3); // pausa para ver resultados
 		Resultados(); //Imprimimos resultados obtenidos
 		if(i == 100){
 			i = 0;
@@ -185,4 +193,3 @@ int main(void){
 	
 	return 0;
 }
-
