@@ -15,10 +15,11 @@ int p = 0;
 int NumeroDeVueltas = 0;
 int Escalar = 4;
 
-int V1[100], V2[100], R_Suma[100], R_Resta[100];
-float R_Modulo[100], R_Magnitud[100];
+int V1[100], V2[100];
+int R_Suma[100], R_Resta[100];
+float R_Magnitud[100];
 int R_Escalar1[100], R_Escalar2[100];
-int R_Producto = 0;
+int R_ProductoPunto = 0;
 int Prioridades[5];
 
 
@@ -26,25 +27,89 @@ void GenerarVectores(){
 	int i;
 	for(i = 0 ; i < NumeroDeVectores ; i++){
     	V1[i]=(rand() % 100) + 1;   
-    	V2[i]=(rand() % 100) + 1;   	
-		printf("%d. Vector 1  = %d\n",i,V1[i]);
-    	printf("%d. Vector 2  = %d\n",i,V2[i]);
+    	V2[i]=(rand() % 100) + 1;
     }
+    printf("----- Vector 1 -----\n[");
+    for(i = 0 ; i < NumeroDeVectores ; i++){
+    	if(i == NumeroDeVectores - 1){
+    		printf("%d]\n\n", V1[i]);
+		}
+		else{
+			printf("%d, ", V1[i]);
+		}
+	}
+	
+	printf("----- Vector 2 -----\n[");
+    for(i = 0 ; i < NumeroDeVectores ; i++){
+    	if(i == NumeroDeVectores - 1){
+    		printf("%d]\n\n", V2[i]);
+		}
+		else{
+			printf("%d, ", V2[i]);
+		}
+	}
 
 }
 
 void Resultados(){
-	while(p != i){
-		printf("Suma = %d\n",R_Suma[p]);
-		printf("Resta = %d\n",R_Resta[p]);
-		printf("Magnitud = %f\n",R_Magnitud[p]);
-		printf("Producto Escalar = %d\n",R_Producto);
-		printf("Vector1 por Escalar = %d\n",R_Escalar1[p]);
-		printf("Vector2 Por Escalar = %d\n",R_Escalar2[p]);
-		p++;
-	}	 
+	
+	printf("------PROCESO %d con prioridades [%d, %d, %d, %d, %d]------\n", i/10, Prioridades[0],Prioridades[1],Prioridades[2],Prioridades[3],Prioridades[4]);
+	
+	printf("Suma:\n[");
+	for(p = 0 ; p < i ; p++){
+    	if(p == i - 1){
+    		printf("%d]\n\n", R_Suma[p]);
+		}
+		else{
+			printf("%d, ", R_Suma[p]);
+		}
+	}
+	
+	printf("Resta:\n[");
+	for(p = 0 ; p < i ; p++){
+    	if(p == i - 1){
+    		printf("%d]\n\n", R_Resta[p]);
+		}
+		else{
+			printf("%d, ", R_Resta[p]);
+		}
+	}
+	
+	printf("Magnitud:\n[");
+	for(p = 0 ; p < i ; p++){
+    	if(p == i - 1){
+    		printf("%.2f]\n\n", R_Magnitud[p]);
+		}
+		else{
+			printf("%.2f, ", R_Magnitud[p]);
+		}
+	}
+	
+	printf("Producto Escalar:\n[ %d ",R_ProductoPunto);
+	printf("]\n\n");
+	
+	printf("Vector 1 por Escalar:\n[");
+	for(p = 0 ; p < i ; p++){
+    	if(p == i - 1){
+    		printf("%d]\n\n", R_Escalar1[p]);
+		}
+		else{
+			printf("%d, ", R_Escalar1[p]);
+		}
+	}
+	printf("Vector 2 Por Escalar:\n[",R_Escalar2[p]);
+	for(p = 0 ; p < i ; p++){
+    	if(p == i - 1){
+    		printf("%d]\n\n\n\n", R_Escalar2[p]);
+		}
+		else{
+			printf("%d, ", R_Escalar2[p]);
+		}
+	}
+		 
 	if(i == 100){
-		p = 0;
+		printf("---------------------FIN DE PROCESO---------------------\n\n\n");
+		
 	}
 }
 
@@ -68,7 +133,6 @@ void llenarPrioridades(){
 			k++;
 		}
 	}
-	//printf("[%d, %d, %d, %d, %d] \n", Prioridades[0],Prioridades[1],Prioridades[2],Prioridades[3],Prioridades[4]);
 }
 
 void SumaVectores(int i){
@@ -79,7 +143,6 @@ void SumaVectores(int i){
 void RestaVectores(int i){
 	R_Resta[i] = V1[i] - V2[i];
 
-   
 }
 
 void MagnitudVectores(int i){
@@ -88,7 +151,7 @@ void MagnitudVectores(int i){
 }
 
 void ProductoVectores(int i){
-	R_Producto += (V1[i]*V2[i]);
+	R_ProductoPunto += (V1[i]*V2[i]);
 }
 
 void EscalarVectores(int i){
@@ -105,17 +168,17 @@ int main(void){
 	while(1){
 		llenarPrioridades();
 		for(j = 0 ; j < 5 ; j++){
-			for(k = 0 ; k < 10 ; k++){
+			for(k = 0 ; k < Quantum ; k++){
 				ops[Prioridades[j]](k + i);
 			}
 		}
 		i += k;
-		sleep(3);
 		Resultados();
 		if(i == 100){
 			i = 0;
 			GenerarVectores();
 		} 
+		sleep(3);
 	}
 	return 0;
 }
